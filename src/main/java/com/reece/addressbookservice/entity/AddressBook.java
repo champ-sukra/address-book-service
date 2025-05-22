@@ -2,12 +2,11 @@ package com.reece.addressbookservice.entity;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
+@Table(name = "address_book")
 public class AddressBook {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,7 +14,13 @@ public class AddressBook {
     private String name;
 
     @ManyToMany
+    @JoinTable(
+            name = "address_book_contact",
+            joinColumns = @JoinColumn(name = "address_book_id"),
+            inverseJoinColumns = @JoinColumn(name = "contact_id")
+    )
     private Set<Contact> contacts = new HashSet<>();
+
 
     protected AddressBook() {
 

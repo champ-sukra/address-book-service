@@ -1,11 +1,9 @@
 package com.reece.addressbookservice.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "phone_number")
 public class PhoneNumber {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

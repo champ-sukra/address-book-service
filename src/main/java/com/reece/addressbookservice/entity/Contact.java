@@ -6,11 +6,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Table(name = "contact")
 public class Contact {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
+
+    @ManyToMany(mappedBy = "contacts")
+    private Set<AddressBook> addressBooks = new HashSet<>();
 
     @OneToMany
     private Set<PhoneNumber> phoneNumbers = new HashSet<>();
@@ -34,5 +38,9 @@ public class Contact {
 
     public Set<PhoneNumber> getPhoneNumbers() {
         return phoneNumbers;
+    }
+
+    public Set<AddressBook> getAddressBooks() {
+        return addressBooks;
     }
 }
