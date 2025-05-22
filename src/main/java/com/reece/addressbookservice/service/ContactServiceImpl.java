@@ -2,7 +2,6 @@ package com.reece.addressbookservice.service;
 
 import com.reece.addressbookservice.component.ContactMapper;
 import com.reece.addressbookservice.dto.ContactRequest;
-import com.reece.addressbookservice.dto.ContactResponse;
 import com.reece.addressbookservice.entity.Contact;
 import com.reece.addressbookservice.exception.DataNotFoundException;
 import com.reece.addressbookservice.repository.ContactRepository;
@@ -27,23 +26,13 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public ContactResponse getContactDetail(Long id) {
-        Contact contact = contactRepository.findById(id)
+    public Contact getContactDetail(Long id) {
+        return contactRepository.findById(id)
                 .orElseThrow(() -> new DataNotFoundException("not_found"));
-        return transformToContactResponse(contact);
     }
 
     @Override
-    public List<ContactResponse> getAllContacts() {
-        return contactRepository.findAll().stream()
-                .map(this::transformToContactResponse)
-                .toList();
-    }
-
-    ContactResponse transformToContactResponse(Contact contact) {
-        return new ContactResponse(contact.getId(),
-                contact.getName(),
-                contact.getPhoneNumbers()
-        );
+    public List<Contact> getAllContacts() {
+        return contactRepository.findAll();
     }
 }

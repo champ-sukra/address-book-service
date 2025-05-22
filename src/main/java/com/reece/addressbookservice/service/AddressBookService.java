@@ -5,7 +5,9 @@ import com.reece.addressbookservice.dto.ContactResponse;
 import com.reece.addressbookservice.entity.Contact;
 
 import java.util.List;
+import java.util.Set;
 
 public interface AddressBookService {
-    Contact createContact(Long addressBookId, ContactRequest contactRequest);
+    Contact createContact(int addressBookId, ContactRequest contactRequest);
+    Set<Contact> getContactsByAddressId(int addressBookId);
 }

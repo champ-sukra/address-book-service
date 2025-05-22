@@ -1,17 +1,14 @@
 package com.reece.addressbookservice.service;
 
 import com.reece.addressbookservice.dto.ContactRequest;
-import com.reece.addressbookservice.dto.ContactResponse;
 import com.reece.addressbookservice.entity.AddressBook;
 import com.reece.addressbookservice.entity.Contact;
 import com.reece.addressbookservice.exception.DataNotFoundException;
 import com.reece.addressbookservice.repository.AddressBookRepository;
-import com.reece.addressbookservice.repository.ContactRepository;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Set;
 
 @Service
 public class AddressBookServiceImpl implements AddressBookService {
@@ -26,7 +23,7 @@ public class AddressBookServiceImpl implements AddressBookService {
 
     @Transactional
     @Override
-    public Contact createContact(Long addressBookId, ContactRequest contactRequest) {
+    public Contact createContact(int addressBookId, ContactRequest contactRequest) {
         AddressBook addressBook = addressBookRepository.findById(addressBookId)
                 .orElseThrow(() -> new DataNotFoundException("Address book not found"));
 
@@ -40,10 +37,10 @@ public class AddressBookServiceImpl implements AddressBookService {
         return contact;
     }
 
-    ContactResponse transformToContactResponse(Contact contact) {
-        return new ContactResponse(contact.getId(),
-                contact.getName(),
-                contact.getPhoneNumbers()
-        );
+    @Override
+    public Set<Contact> getContactsByAddressId(int addressBookId) {
+        AddressBook addressBook = addressBookRepository.findById(addressBookId)
+                .orElseThrow(() -> new DataNotFoundException("Address book not found"));
+        return addressBook.getContacts();
     }
 }

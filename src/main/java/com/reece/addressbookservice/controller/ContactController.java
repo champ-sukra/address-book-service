@@ -1,7 +1,8 @@
 package com.reece.addressbookservice.controller;
 
-import com.reece.addressbookservice.dto.ContactRequest;
+import com.reece.addressbookservice.component.ContactMapper;
 import com.reece.addressbookservice.dto.ContactResponse;
+import com.reece.addressbookservice.entity.Contact;
 import com.reece.addressbookservice.service.ContactService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +16,11 @@ public class ContactController {
 
     private final ContactService contactService;
 
-    public ContactController(ContactService contactService) {
+    private final ContactMapper contactMapper;
+
+    public ContactController(ContactService contactService, ContactMapper contactMapper) {
         this.contactService = contactService;
+        this.contactMapper = contactMapper;
     }
 
     @GetMapping("/{id}")
@@ -25,12 +29,13 @@ public class ContactController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        ContactResponse contactResponse = contactService.getContactDetail(id);;
-        return new ResponseEntity<>(contactResponse, HttpStatus.OK);
+        Contact contact = contactService.getContactDetail(id);;
+        return new ResponseEntity<>(contactMapper.toContactResponse(contact), HttpStatus.OK);
     }
 
     @GetMapping
     public ResponseEntity<List<ContactResponse>> getAllContacts() {
-        return new ResponseEntity<>(contactService.getAllContacts(), HttpStatus.OK);
+        List<Contact> contacts = contactService.getAllContacts();
+        return new ResponseEntity<>(contacts.stream().map(contactMapper::toContactResponse).toList(), HttpStatus.OK);
     }
 }
