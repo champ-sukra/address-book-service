@@ -1,4 +1,6 @@
 package com.reece.addressbookservice.dto;
 
-public record ContactRequest(String name, String phoneNo) { }
+import java.util.List;
+
+public record ContactRequest(String name, List<String> phoneNos) { }
 

@@ -3,6 +3,7 @@ package com.reece.addressbookservice.component;
 import com.reece.addressbookservice.dto.ContactRequest;
 import com.reece.addressbookservice.dto.ContactResponse;
 import com.reece.addressbookservice.entity.Contact;
+import com.reece.addressbookservice.entity.PhoneNo;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -11,14 +12,18 @@ public class ContactMapper {
         return new ContactResponse(
                 contact.getId(),
                 contact.getName(),
-                contact.getPhoneNumbers()
+                contact.getPhoneNos()
         );
     }
 
     public Contact toContactEntity(ContactRequest contactRequest) {
-        return new Contact(
-                null,
-                contactRequest.name()
-        );
+        Contact contact = new Contact(null, contactRequest.name());
+        if (contactRequest.phoneNos() != null) {
+            for (String num : contactRequest.phoneNos()) {
+                PhoneNo phoneNo = new PhoneNo(null, num);
+                contact.addPhoneNo(phoneNo);
+            }
+        }
+        return contact;
     }
 }

@@ -10,6 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -31,7 +32,7 @@ public class AddressBookServiceTest {
     void createContact_shouldReturnContactInAddressBook() {
         //given
         AddressBook addressBook = new AddressBook(1, "WORK");
-        ContactRequest request = new ContactRequest("test", "0402465555");
+        ContactRequest request = new ContactRequest("test", List.of("0402465555"));
         Contact expected = new Contact(1L, "test");
 
         //when

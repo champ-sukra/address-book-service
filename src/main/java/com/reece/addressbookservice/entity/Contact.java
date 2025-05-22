@@ -1,27 +1,26 @@
 package com.reece.addressbookservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "contact")
 public class Contact {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private Long id;
     private String name;
 
     @ManyToMany(mappedBy = "contacts")
+    @JsonBackReference
     private Set<AddressBook> addressBooks = new HashSet<>();
 
-    @OneToMany
-    private Set<PhoneNumber> phoneNumbers = new HashSet<>();
+    @OneToMany(mappedBy = "contact", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<PhoneNo> phoneNos = new HashSet<>();
 
-    protected Contact() {
-
-    }
+    protected Contact() {}
 
     public Contact(Long id, String name) {
         this.id = id;
@@ -36,11 +35,21 @@ public class Contact {
         return name;
     }
 
-    public Set<PhoneNumber> getPhoneNumbers() {
-        return phoneNumbers;
+    public Set<PhoneNo> getPhoneNos() {
+        return phoneNos;
     }
 
     public Set<AddressBook> getAddressBooks() {
         return addressBooks;
+    }
+
+    public void addPhoneNo(PhoneNo phoneNo) {
+        phoneNos.add(phoneNo);
+        phoneNo.setContact(this);
+    }
+
+    public void removePhoneNo(PhoneNo phoneNo) {
+        phoneNos.remove(phoneNo);
+        phoneNo.setContact(null);
     }
 }

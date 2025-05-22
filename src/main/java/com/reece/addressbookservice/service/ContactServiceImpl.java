@@ -22,7 +22,8 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public Contact createContact(ContactRequest contactRequest) {
-        return contactRepository.save(contactMapper.toContactEntity(contactRequest));
+        Contact contact = contactMapper.toContactEntity(contactRequest);
+        return contactRepository.save(contact);
     }
 
     @Override

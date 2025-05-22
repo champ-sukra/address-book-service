@@ -11,11 +11,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -33,7 +33,7 @@ public class ContactServiceTest {
     @Test
     void createContact_shouldReturnContact() {
         //given
-        ContactRequest request = new ContactRequest("test", "0402465555");
+        ContactRequest request = new ContactRequest("test", null);
         Contact contact = new Contact(null, "test");
         Contact expected = new Contact(1L, "test");
 

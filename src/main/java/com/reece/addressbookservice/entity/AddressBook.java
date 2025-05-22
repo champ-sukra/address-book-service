@@ -6,10 +6,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "address_book")
 public class AddressBook {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private Integer id;
     private String name;
 
@@ -22,9 +21,7 @@ public class AddressBook {
     private Set<Contact> contacts = new HashSet<>();
 
 
-    protected AddressBook() {
-
-    }
+    protected AddressBook() {}
 
     public AddressBook(int id, String name) {
         this.id = id;
