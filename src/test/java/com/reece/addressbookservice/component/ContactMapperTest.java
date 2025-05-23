@@ -31,7 +31,7 @@ class ContactMapperTest {
         assertNotNull(contact.getPhoneNos());
         assertEquals(2, contact.getPhoneNos().size());
         assertEquals(Set.of("0402465555", "0402465556"),
-                contact.getPhoneNos().stream().map(PhoneNo::getNumber).collect(java.util.stream.Collectors.toSet()));
+                contact.getPhoneNos().stream().map(PhoneNo::getNumber).collect(Collectors.toSet()));
     }
 
     @Test

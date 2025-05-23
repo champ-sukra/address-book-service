@@ -3,6 +3,7 @@ package com.reece.addressbookservice.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -44,12 +45,15 @@ public class Contact {
     }
 
     public void addPhoneNo(PhoneNo phoneNo) {
+        if (this.phoneNos == null) {
+            this.phoneNos = new HashSet<>();
+        }
         phoneNos.add(phoneNo);
         phoneNo.setContact(this);
     }
 
     public void removePhoneNo(PhoneNo phoneNo) {
         phoneNos.remove(phoneNo);
-        phoneNo.setContact(null);
+        phoneNo.setContact(this);
     }
 }

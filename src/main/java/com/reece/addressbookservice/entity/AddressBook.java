@@ -8,7 +8,7 @@ import java.util.Set;
 @Entity
 public class AddressBook {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
 
@@ -23,7 +23,7 @@ public class AddressBook {
 
     protected AddressBook() {}
 
-    public AddressBook(int id, String name) {
+    public AddressBook(Integer id, String name) {
         this.id = id;
         this.name = name;
     }

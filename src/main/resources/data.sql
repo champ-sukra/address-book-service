@@ -1,3 +1,3 @@
-INSERT INTO address_book (id, name) VALUES (1, 'Work');
-INSERT INTO address_book (id, name) VALUES (2, 'Family');
-INSERT INTO address_book (id, name) VALUES (3, 'Friends');
+INSERT INTO address_book (name) VALUES ('Work');
+INSERT INTO address_book (name) VALUES ('Family');
+INSERT INTO address_book (name) VALUES ('Friends');

@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 @Entity
 public class PhoneNo {
     @Id
@@ -38,5 +40,17 @@ public class PhoneNo {
 
     public void setContact(Contact contact) {
         this.contact = contact;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PhoneNo phoneNo)) return false;
+        return Objects.equals(number, phoneNo.number);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(number);
     }
 }
