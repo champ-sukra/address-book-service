@@ -1,7 +1,7 @@
 package com.reece.addressbookservice.controller;
 
-import com.reece.addressbookservice.component.AddressBookMapper;
-import com.reece.addressbookservice.component.ContactMapper;
+import com.reece.addressbookservice.mapper.AddressBookMapper;
+import com.reece.addressbookservice.mapper.ContactMapper;
 import com.reece.addressbookservice.dto.AddressBookRequest;
 import com.reece.addressbookservice.dto.AddressBookResponse;
 import com.reece.addressbookservice.dto.ContactRequest;
@@ -52,28 +52,37 @@ public class AddressBookController {
     //IDEMPOTENT DELETE
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteAddressBook(@PathVariable("id") Integer id) {
-        if (id == null || id <= 0) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (id <= 0) {
+            return ResponseEntity.badRequest().build();
         }
 
         addressBookService.deleteAddressBookById(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/{id}/contacts")
     public ResponseEntity<ContactResponse> createContact(@PathVariable("id") Integer id,
                                                          @RequestBody ContactRequest contactRequest) {
+        if (id <= 0) {
+            return ResponseEntity.badRequest().build();
+        }
+
         Contact contact = addressBookService.createContact(id, contactRequest);
-        return new ResponseEntity<>(contactMapper.toContactResponse(contact), HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(contactMapper.toContactResponse(contact));
     }
 
     @GetMapping("/{id}/contacts")
     public ResponseEntity<Set<ContactResponse>> getContacts(@PathVariable("id") Integer id) {
+        if (id <= 0) {
+            return ResponseEntity.badRequest().build();
+        }
+
         Set<Contact> contacts = addressBookService.getContactsByAddressId(id);
         Set<ContactResponse> contactResponses = contacts.stream()
                 .map(contactMapper::toContactResponse)
                 .collect(Collectors.toSet());
-        return new ResponseEntity<>(contactResponses, HttpStatus.OK);
+        return ResponseEntity.ok(contactResponses);
     }
 }
 

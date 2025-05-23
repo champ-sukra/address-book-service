@@ -1,4 +1,4 @@
-package com.reece.addressbookservice.component;
+package com.reece.addressbookservice.mapper;
 
 import com.reece.addressbookservice.dto.ContactRequest;
 import com.reece.addressbookservice.dto.ContactResponse;
@@ -19,6 +19,7 @@ public class ContactMapper {
     public Contact toContactEntity(ContactRequest contactRequest) {
         Contact contact = new Contact(null, contactRequest.name());
         if (contactRequest.phoneNos() != null) {
+            // Map each phone number string to a PhoneNo entity and associate it
             for (String num : contactRequest.phoneNos()) {
                 PhoneNo phoneNo = new PhoneNo(null, num);
                 contact.addPhoneNo(phoneNo);

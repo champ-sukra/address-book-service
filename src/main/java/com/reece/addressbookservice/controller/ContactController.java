@@ -1,6 +1,6 @@
 package com.reece.addressbookservice.controller;
 
-import com.reece.addressbookservice.component.ContactMapper;
+import com.reece.addressbookservice.mapper.ContactMapper;
 import com.reece.addressbookservice.dto.ContactResponse;
 import com.reece.addressbookservice.dto.PhoneNoRequest;
 import com.reece.addressbookservice.entity.Contact;
@@ -30,12 +30,12 @@ public class ContactController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ContactResponse> getContactById(@PathVariable("id") Long id) {
-        if (id == null || id <= 0) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (id <= 0) {
+            return ResponseEntity.badRequest().build();
         }
 
         Contact contact = contactService.getContactDetail(id);;
-        return new ResponseEntity<>(contactMapper.toContactResponse(contact), HttpStatus.OK);
+        return ResponseEntity.ok(contactMapper.toContactResponse(contact));
     }
 
     @GetMapping("/unique")
@@ -51,24 +51,25 @@ public class ContactController {
                                         .collect(Collectors.joining(","))
                 ))
                 .collect(Collectors.toSet());
-        return new ResponseEntity<>(contactResponses, HttpStatus.OK);
+        return ResponseEntity.ok(contactResponses);
     }
 
     //IDEMPOTENT DELETE
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteContactById(@PathVariable("id") Long id) {
-        if (id == null || id <= 0) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (id <= 0) {
+            return ResponseEntity.badRequest().build();
         }
 
         contactService.deleteContact(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/{id}/phone-nos")
     public ResponseEntity<ContactResponse> addPhoneNoToContact(
             @PathVariable("id") Long id, @Valid @RequestBody PhoneNoRequest phoneNoRequest) {
         Contact contact = contactService.addPhoneNoToContact(id, phoneNoRequest);
-        return new ResponseEntity<>(contactMapper.toContactResponse(contact), HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(contactMapper.toContactResponse(contact));
     }
 }

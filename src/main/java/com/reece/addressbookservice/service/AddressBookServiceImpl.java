@@ -1,6 +1,6 @@
 package com.reece.addressbookservice.service;
 
-import com.reece.addressbookservice.component.AddressBookMapper;
+import com.reece.addressbookservice.mapper.AddressBookMapper;
 import com.reece.addressbookservice.dto.AddressBookRequest;
 import com.reece.addressbookservice.dto.ContactRequest;
 import com.reece.addressbookservice.entity.AddressBook;

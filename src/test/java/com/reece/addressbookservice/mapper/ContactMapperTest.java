@@ -1,4 +1,4 @@
-package com.reece.addressbookservice.component;
+package com.reece.addressbookservice.mapper;
 
 import com.reece.addressbookservice.dto.ContactRequest;
 import com.reece.addressbookservice.dto.ContactResponse;
