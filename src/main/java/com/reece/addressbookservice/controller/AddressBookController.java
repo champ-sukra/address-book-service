@@ -67,7 +67,7 @@ public class AddressBookController {
 
     @PostMapping("/{id}/contacts")
     public ResponseEntity<ApiResponse<ContactResponse>> createContact(@PathVariable("id") Integer id,
-                                                         @RequestBody ContactRequest contactRequest) {
+                                                         @RequestBody @Valid ContactRequest contactRequest) {
         if (id <= 0) {
             return ResponseEntity.badRequest().build();
         }

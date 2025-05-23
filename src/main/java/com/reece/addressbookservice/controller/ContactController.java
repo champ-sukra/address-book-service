@@ -70,6 +70,10 @@ public class ContactController {
     @PatchMapping("/{id}/phone-nos")
     public ResponseEntity<ApiResponse<ContactResponse>> addPhoneNoToContact(
             @PathVariable("id") Long id, @Valid @RequestBody PhoneNoRequest phoneNoRequest) {
+        if (id <= 0) {
+            return ResponseEntity.badRequest().build();
+        }
+
         Contact contact = contactService.addPhoneNoToContact(id, phoneNoRequest);
         ContactResponse response = contactMapper.toContactResponse(contact);
         return ResponseEntity.status(HttpStatus.CREATED)
