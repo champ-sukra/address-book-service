@@ -1,22 +1,78 @@
-# address-book-service
+# Address Book Service
 
-Branch Manager Address Book API
-As a Reece Branch Manager
-I would like an address book application
-So that I can keep track of my customer contacts
-Acceptance Criteria
-o Address book will hold name and phone numbers of contact entries
-o Create a REST API which will have endpoints for the following -
-o Users should be able to add new contact entries 
-o Users should be able to remove existing contact
-entries
-o Users should be able to print all contacts in an
-address book
-o Users should be able to maintain multiple address
-books
-o Users should be able to print a unique set of all
-contacts across multiple address books
-An API spec would be nice to have. All acceptance criteria should be covered by unit tests, with additional integration tests where appropriate. 
-Tests will be included in the assessment criteria, as will demonstration of other good coding practices like - clear separation of concerns, clean code, standardised formatting, etc. Data can be persisted in a storage medium of your choice – like - In-mem DB, Files, etc.
-Finally, containerise the application using docker so that it can be deployed on the Reece Kubernetes Platform.
-NOTE: Solution must be written in Java + Spring Boot
+A RESTful Address Book API built with Java 21 and Spring Boot.
+
+---
+
+## 🚀 Features
+
+- Manage multiple address books (create, list, delete)
+- Add, retrieve, delete contacts within address books
+- Support for multiple phone numbers per contact
+- Retrieve a unique set of contacts across multiple address books
+- H2 in-memory database for demo/testing (no installation required)
+- Clean architecture: controller, service, repository, DTO, and mapping layers
+- Containerized with Docker for easy deployment
+- Comprehensive unit and integration tests
+- **Swagger/OpenAPI** documentation
+- **Actuator** endpoints for health and monitoring
+
+---
+
+## 🛠️ Tech Stack
+
+- Java 21
+- Spring Boot
+- H2 Database
+- JPA/Hibernate
+- MapStruct (DTO mapping)
+- JUnit 5 & Spring Boot Test
+- Docker
+
+---
+
+## 🏁 Getting Started
+
+### **1. Build and Run Locally**
+
+```bash
+# Clone the repository
+git clone https://github.com/champ-sukra/address-book-service.git
+
+# Build and run tests
+./gradlew build
+
+# Run the application
+./gradlew bootRun
+
+# Build docker image
+./gradlew clean build -x test
+docker build -t address-book-service .
+
+# Run docker container
+docker run -p 8080:8080 address-book-service
+
+# JSON API Example
+{
+  "code": "success",
+  "data": { ... }
+}
+
+Health check:
+http://localhost:8080/address-book-service/actuator/health
+
+Actuator info:
+http://localhost:8080/address-book-service/actuator
+
+H2 Console:
+http://localhost:8080/address-book-service/h2-console
+
+Swagger/OpenAPI docs:
+http://localhost:8080/address-book-service/swagger-ui/index.html#
+
+
+NOTE
+- All API input is validated.
+- Standardized error and success responses.
+- Designed for clean code, SOLID, and easy testability.
+

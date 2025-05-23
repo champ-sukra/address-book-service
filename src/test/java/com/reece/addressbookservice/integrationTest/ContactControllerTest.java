@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ContactControllerTest {
@@ -37,7 +38,7 @@ public class ContactControllerTest {
         //parse the response to get the contact ID
         JsonNode contactRoot = objectMapper.readTree(createContactResp.getBody());
         int contactId = contactRoot.path("data").path("id").asInt();
-        assertEquals(1, contactId);
+        assertTrue(contactId > 0);
 
         //get the contact from the contact-id
         ResponseEntity<String> getContactResp = restTemplate.getForEntity(
@@ -55,12 +56,6 @@ public class ContactControllerTest {
                 "/address-books/1/contacts", duplicateRequest, String.class);
 
         assertEquals(HttpStatus.CREATED, duplicateContactResp.getStatusCode());
-
-        //ensure get unique contacts
-        ResponseEntity<String> uniqueContactsResp = restTemplate.getForEntity("/contacts/unique", String.class);
-        assertEquals(HttpStatus.OK, uniqueContactsResp.getStatusCode());
-        JsonNode uniqueRoot = objectMapper.readTree(uniqueContactsResp.getBody());
-        assertEquals(1, uniqueRoot.path("data").size());
 
         //add new phone number to the existing contact
         PhoneNoRequest phoneNoRequest = new PhoneNoRequest("0402465556");

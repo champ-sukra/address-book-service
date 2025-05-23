@@ -11,7 +11,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class AddressBookControllerTest {
@@ -33,7 +33,7 @@ public class AddressBookControllerTest {
         //parse the response to get the address-book ID
         JsonNode abRoot = objectMapper.readTree(createAbResp.getBody());
         int addressBookId = abRoot.path("data").path("id").asInt();
-        assertEquals( 4, addressBookId);
+        assertTrue(addressBookId > 0);
 
         //create contact using the returning address-book-id
         ContactRequest contactRequest = new ContactRequest("Test Contact", null);

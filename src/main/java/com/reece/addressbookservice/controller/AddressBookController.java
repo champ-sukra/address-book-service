@@ -10,6 +10,8 @@ import com.reece.addressbookservice.dto.ContactResponse;
 import com.reece.addressbookservice.entity.AddressBook;
 import com.reece.addressbookservice.entity.Contact;
 import com.reece.addressbookservice.service.AddressBookService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +39,12 @@ public class AddressBookController {
         this.addressBookMapper = addressBookMapper;
     }
 
-    @PostMapping()
+    @Operation(summary = "Create a new address book", description = "Creates a new address book with the given name.")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "Address book created successfully"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Invalid request data")
+    })
+    @PostMapping
     public ResponseEntity<ApiResponse<AddressBookResponse>> createAddressBook(@RequestBody @Valid AddressBookRequest addressBookRequest) {
         AddressBook addressBook = addressBookService.createAddressBook(addressBookRequest);
         AddressBookResponse response = addressBookMapper.toAddressBookResponse(addressBook);
@@ -45,6 +52,11 @@ public class AddressBookController {
                 .body(ApiResponse.success(response));
     }
 
+    @Operation(summary = "Create a new address book", description = "Creates a new address book with the given name.")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "Address book created successfully"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Invalid request data")
+    })
     @GetMapping
     public ResponseEntity<ApiResponse<List<AddressBookResponse>>> getAddressBooks() {
         List<AddressBook> addressBooks = addressBookService.getAddressBooks();
@@ -55,6 +67,11 @@ public class AddressBookController {
     }
 
     //IDEMPOTENT DELETE
+    @Operation(summary = "Delete an address book", description = "Deletes an address book by its ID.")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "204", description = "Address book deleted successfully"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Address book not found")
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<Void>> deleteAddressBook(@PathVariable("id") Integer id) {
         if (id <= 0) {
@@ -65,6 +82,12 @@ public class AddressBookController {
         return ResponseEntity.ok(ApiResponse.success(null));
     }
 
+    @Operation(summary = "Create a new contact", description = "Creates a new contact in the specified address book.")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "Contact created successfully"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Invalid request data or address book ID"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Address book not found")
+    })
     @PostMapping("/{id}/contacts")
     public ResponseEntity<ApiResponse<ContactResponse>> createContact(@PathVariable("id") Integer id,
                                                          @RequestBody @Valid ContactRequest contactRequest) {
@@ -77,6 +100,12 @@ public class AddressBookController {
         return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success(response));
     }
 
+    @Operation(summary = "Get contacts in an address book", description = "Retrieves all contacts associated with the specified address book.")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Contacts retrieved successfully"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Invalid address book ID"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Address book not found")
+    })
     @GetMapping("/{id}/contacts")
     public ResponseEntity<ApiResponse<Set<ContactResponse>>> getContacts(@PathVariable("id") Integer id) {
         if (id <= 0) {

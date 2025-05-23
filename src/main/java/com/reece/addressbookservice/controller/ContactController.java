@@ -7,6 +7,8 @@ import com.reece.addressbookservice.dto.PhoneNoRequest;
 import com.reece.addressbookservice.entity.Contact;
 import com.reece.addressbookservice.entity.PhoneNo;
 import com.reece.addressbookservice.service.ContactService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +31,12 @@ public class ContactController {
         this.contactMapper = contactMapper;
     }
 
+    @Operation(summary = "Get a contact by ID", description = "Retrieves the details of a contact by its ID.")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Contact retrieved successfully"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Invalid contact ID"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Contact not found")
+    })
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<ContactResponse>> getContactById(@PathVariable("id") Long id) {
         if (id <= 0) {
@@ -40,6 +48,10 @@ public class ContactController {
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
+    @Operation(summary = "Get unique contacts", description = "Retrieves a list of unique contacts across all address books.")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Unique contacts retrieved successfully")
+    })
     @GetMapping("/unique")
     public ResponseEntity<ApiResponse<Set<ContactResponse>>> getUniqueContacts() {
         Set<String> filtered = new HashSet<>();
@@ -57,6 +69,12 @@ public class ContactController {
     }
 
     //IDEMPOTENT DELETE
+    @Operation(summary = "Delete a contact by ID", description = "Deletes a contact by its ID.")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "204", description = "Contact deleted successfully"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Invalid contact ID"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Contact not found")
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<Void>> deleteContactById(@PathVariable("id") Long id) {
         if (id <= 0) {
@@ -67,6 +85,11 @@ public class ContactController {
         return ResponseEntity.ok(ApiResponse.success(null));
     }
 
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Phone number added successfully"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Invalid contact ID or phone number"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Contact not found")
+    })
     @PatchMapping("/{id}/phone-nos")
     public ResponseEntity<ApiResponse<ContactResponse>> addPhoneNoToContact(
             @PathVariable("id") Long id, @Valid @RequestBody PhoneNoRequest phoneNoRequest) {
