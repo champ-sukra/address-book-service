@@ -36,7 +36,7 @@ public class ContactServiceImpl implements ContactService {
     @Override
     public Contact getContactDetail(Long id) {
         return contactRepository.findById(id)
-                .orElseThrow(() -> new DataNotFoundException("Contact not found"));
+                .orElseThrow(() -> new DataNotFoundException("contact_not_found", String.format("Contact - %d is not found", id)));
     }
 
     @Override
@@ -46,8 +46,7 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public void deleteContact(Long id) {
-        Contact contact = contactRepository.findById(id)
-                .orElseThrow(() -> new DataNotFoundException("not_found"));
+        Contact contact = getContactDetail(id);
 
         for (AddressBook addressBook : contact.getAddressBooks()) {
             addressBook.getContacts().remove(contact);

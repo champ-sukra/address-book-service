@@ -1,5 +1,6 @@
 package com.reece.addressbookservice.controller;
 
+import com.reece.addressbookservice.dto.global.ApiResponse;
 import com.reece.addressbookservice.mapper.ContactMapper;
 import com.reece.addressbookservice.dto.ContactResponse;
 import com.reece.addressbookservice.dto.PhoneNoRequest;
@@ -29,17 +30,18 @@ public class ContactController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ContactResponse> getContactById(@PathVariable("id") Long id) {
+    public ResponseEntity<ApiResponse<ContactResponse>> getContactById(@PathVariable("id") Long id) {
         if (id <= 0) {
             return ResponseEntity.badRequest().build();
         }
 
-        Contact contact = contactService.getContactDetail(id);;
-        return ResponseEntity.ok(contactMapper.toContactResponse(contact));
+        Contact contact = contactService.getContactDetail(id);
+        ContactResponse response = contactMapper.toContactResponse(contact);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @GetMapping("/unique")
-    public ResponseEntity<Set<ContactResponse>> getUniqueContacts() {
+    public ResponseEntity<ApiResponse<Set<ContactResponse>>> getUniqueContacts() {
         Set<String> filtered = new HashSet<>();
         Set<ContactResponse> contactResponses = contactService.getAllContacts().stream()
                 .map(contactMapper::toContactResponse)
@@ -51,25 +53,26 @@ public class ContactController {
                                         .collect(Collectors.joining(","))
                 ))
                 .collect(Collectors.toSet());
-        return ResponseEntity.ok(contactResponses);
+        return ResponseEntity.ok(ApiResponse.success(contactResponses));
     }
 
     //IDEMPOTENT DELETE
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteContactById(@PathVariable("id") Long id) {
+    public ResponseEntity<ApiResponse<Void>> deleteContactById(@PathVariable("id") Long id) {
         if (id <= 0) {
             return ResponseEntity.badRequest().build();
         }
 
         contactService.deleteContact(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(ApiResponse.success(null));
     }
 
     @PatchMapping("/{id}/phone-nos")
-    public ResponseEntity<ContactResponse> addPhoneNoToContact(
+    public ResponseEntity<ApiResponse<ContactResponse>> addPhoneNoToContact(
             @PathVariable("id") Long id, @Valid @RequestBody PhoneNoRequest phoneNoRequest) {
         Contact contact = contactService.addPhoneNoToContact(id, phoneNoRequest);
+        ContactResponse response = contactMapper.toContactResponse(contact);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(contactMapper.toContactResponse(contact));
+                .body(ApiResponse.success(response));
     }
 }

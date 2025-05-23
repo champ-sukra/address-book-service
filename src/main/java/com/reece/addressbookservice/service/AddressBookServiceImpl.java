@@ -38,17 +38,15 @@ public class AddressBookServiceImpl implements AddressBookService {
     }
 
     @Override
-    public void deleteAddressBookById(int id) {
-        AddressBook addressBook = addressBookRepository.findById(id)
-                .orElseThrow(() -> new DataNotFoundException("Address book not found"));
+    public void deleteAddressBookById(int addressBookId) {
+        AddressBook addressBook = findById(addressBookId);
         addressBookRepository.delete(addressBook);
     }
 
     @Transactional
     @Override
     public Contact createContact(int addressBookId, ContactRequest contactRequest) {
-        AddressBook addressBook = addressBookRepository.findById(addressBookId)
-                .orElseThrow(() -> new DataNotFoundException("Address book not found"));
+        AddressBook addressBook = findById(addressBookId);
 
         //create persist contact via service layer
         Contact contact = contactService.createContact(contactRequest);
@@ -62,8 +60,12 @@ public class AddressBookServiceImpl implements AddressBookService {
 
     @Override
     public Set<Contact> getContactsByAddressId(int addressBookId) {
-        AddressBook addressBook = addressBookRepository.findById(addressBookId)
-                .orElseThrow(() -> new DataNotFoundException("Address book not found"));
+        AddressBook addressBook = findById(addressBookId);
         return addressBook.getContacts();
+    }
+
+    private AddressBook findById(int id) {
+        return addressBookRepository.findById(id)
+                .orElseThrow(() -> new DataNotFoundException("ab_not_found", String.format("Address book - %d is not found", id)));
     }
 }

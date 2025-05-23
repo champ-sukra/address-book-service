@@ -1,5 +1,6 @@
 package com.reece.addressbookservice.controller;
 
+import com.reece.addressbookservice.dto.global.ApiResponse;
 import com.reece.addressbookservice.mapper.AddressBookMapper;
 import com.reece.addressbookservice.mapper.ContactMapper;
 import com.reece.addressbookservice.dto.AddressBookRequest;
@@ -37,52 +38,56 @@ public class AddressBookController {
     }
 
     @PostMapping()
-    public ResponseEntity<AddressBookResponse> createAddressBook(@RequestBody @Valid AddressBookRequest addressBookRequest) {
+    public ResponseEntity<ApiResponse<AddressBookResponse>> createAddressBook(@RequestBody @Valid AddressBookRequest addressBookRequest) {
         AddressBook addressBook = addressBookService.createAddressBook(addressBookRequest);
-        return new ResponseEntity<>(addressBookMapper.toAddressBookResponse(addressBook), HttpStatus.CREATED);
+        AddressBookResponse response = addressBookMapper.toAddressBookResponse(addressBook);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(ApiResponse.success(response));
     }
 
     @GetMapping
-    public ResponseEntity<List<AddressBookResponse>> getAddressBooks() {
+    public ResponseEntity<ApiResponse<List<AddressBookResponse>>> getAddressBooks() {
         List<AddressBook> addressBooks = addressBookService.getAddressBooks();
-        return new ResponseEntity<>((addressBooks.stream()
-                .map(addressBookMapper::toAddressBookResponse).collect(Collectors.toList())), HttpStatus.OK);
+        List<AddressBookResponse> addressBookResponses = addressBooks.stream()
+                .map(addressBookMapper::toAddressBookResponse)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(ApiResponse.success(addressBookResponses));
     }
 
     //IDEMPOTENT DELETE
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAddressBook(@PathVariable("id") Integer id) {
+    public ResponseEntity<ApiResponse<Void>> deleteAddressBook(@PathVariable("id") Integer id) {
         if (id <= 0) {
             return ResponseEntity.badRequest().build();
         }
 
         addressBookService.deleteAddressBookById(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(ApiResponse.success(null));
     }
 
     @PostMapping("/{id}/contacts")
-    public ResponseEntity<ContactResponse> createContact(@PathVariable("id") Integer id,
+    public ResponseEntity<ApiResponse<ContactResponse>> createContact(@PathVariable("id") Integer id,
                                                          @RequestBody ContactRequest contactRequest) {
         if (id <= 0) {
             return ResponseEntity.badRequest().build();
         }
 
         Contact contact = addressBookService.createContact(id, contactRequest);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(contactMapper.toContactResponse(contact));
+        ContactResponse response = contactMapper.toContactResponse(contact);
+        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success(response));
     }
 
     @GetMapping("/{id}/contacts")
-    public ResponseEntity<Set<ContactResponse>> getContacts(@PathVariable("id") Integer id) {
+    public ResponseEntity<ApiResponse<Set<ContactResponse>>> getContacts(@PathVariable("id") Integer id) {
         if (id <= 0) {
             return ResponseEntity.badRequest().build();
         }
 
         Set<Contact> contacts = addressBookService.getContactsByAddressId(id);
-        Set<ContactResponse> contactResponses = contacts.stream()
+        Set<ContactResponse> responses = contacts.stream()
                 .map(contactMapper::toContactResponse)
                 .collect(Collectors.toSet());
-        return ResponseEntity.ok(contactResponses);
+        return ResponseEntity.ok(ApiResponse.success(responses));
     }
 }
 

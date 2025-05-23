@@ -11,7 +11,7 @@ import java.util.Set;
 public interface AddressBookService {
     AddressBook createAddressBook(AddressBookRequest request);
     List<AddressBook> getAddressBooks();
-    void deleteAddressBookById(int id);
+    void deleteAddressBookById(int addressBookId);
     Contact createContact(int addressBookId, ContactRequest contactRequest);
     Set<Contact> getContactsByAddressId(int addressBookId);
 }
