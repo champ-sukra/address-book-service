@@ -1,7 +1,6 @@
 package com.reece.addressbookservice.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.reece.addressbookservice.dto.ContactRequest;
 import com.reece.addressbookservice.dto.ContactResponse;
 import com.reece.addressbookservice.dto.PhoneNoRequest;
 import com.reece.addressbookservice.entity.Contact;
@@ -18,10 +17,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 import java.util.Set;
 
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -214,7 +213,7 @@ public class ContactControllerTest {
         mockMvc.perform(patch("/contacts/{id}/phone-nos", contactId)
                         .contentType("application/json")
                         .content(objectMapper.writeValueAsString(new PhoneNoRequest("0402465555"))))
-                .andExpect(status().isCreated())
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value("success"))
                 .andExpect(jsonPath("$.data.id").value(1L))
                 .andExpect(jsonPath("$.data.name").value("test"))

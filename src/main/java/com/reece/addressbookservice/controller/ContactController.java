@@ -76,7 +76,6 @@ public class ContactController {
 
         Contact contact = contactService.addPhoneNoToContact(id, phoneNoRequest);
         ContactResponse response = contactMapper.toContactResponse(contact);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(ApiResponse.success(response));
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 }
