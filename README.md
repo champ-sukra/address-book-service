@@ -17,6 +17,30 @@ A RESTful Address Book API built with Java 21 and Spring Boot.
 - **Swagger/OpenAPI** documentation
 - **Actuator** endpoints for health and monitoring
 
+## Project Structure
+```
+address-book-service/
+├── src/
+│   ├── main/java/com/reece/addressbookservice/
+│   │   ├── presentation/           # REST Controllers & DTOs
+│   │   ├── application/            # Application Services & Mappers
+│   │   ├── domain/                 # Domain Entities & Services (DDD Core)
+│   │   └── infrastructure/         # Repositories & Configuration
+│   └── test/                       # Unit & Integration Tests
+├── build.gradle.kts
+├── Dockerfile
+└── README.md
+
+```
+Presentation Layer (DTOs)
+↓ (via controllers)
+Application Layer (Services)
+↓ (creates entities directly)
+Domain Layer (Entities with validation)
+↓ (via repositories)
+Infrastructure Layer (Persistence)
+```
+
 ---
 
 ## 🛠️ Tech Stack

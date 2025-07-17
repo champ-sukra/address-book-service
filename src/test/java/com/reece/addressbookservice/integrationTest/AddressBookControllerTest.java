@@ -2,8 +2,8 @@ package com.reece.addressbookservice.integrationTest;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.reece.addressbookservice.dto.AddressBookRequest;
-import com.reece.addressbookservice.dto.ContactRequest;
+import com.reece.addressbookservice.presentation.dto.AddressBookRequest;
+import com.reece.addressbookservice.presentation.dto.ContactRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
