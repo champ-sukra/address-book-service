@@ -3,7 +3,7 @@ package com.reece.addressbookservice.presentation.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.reece.addressbookservice.application.mapper.AddressBookMapper;
 import com.reece.addressbookservice.application.mapper.ContactMapper;
-import com.reece.addressbookservice.application.service.AddressBookService;
+import com.reece.addressbookservice.application.AddressBookService;
 import com.reece.addressbookservice.domain.entity.AddressBook;
 import com.reece.addressbookservice.domain.entity.Contact;
 import com.reece.addressbookservice.presentation.dto.AddressBookRequest;

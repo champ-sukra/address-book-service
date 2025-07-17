@@ -1,4 +1,4 @@
-package com.reece.addressbookservice.mapper;
+package com.reece.addressbookservice.application.mapper;
 
 import com.reece.addressbookservice.application.mapper.PhoneNoMapper;
 import com.reece.addressbookservice.application.mapper.PhoneNoMapperImpl;

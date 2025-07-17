@@ -54,7 +54,7 @@ Infrastructure Layer (Persistence)
 - Docker
 
 ---
-
+```
 ## 🏁 Getting Started
 
 ### **1. Build and Run Locally**
@@ -75,6 +75,7 @@ docker build -t address-book-service .
 
 # Run docker container
 docker run -p 8080:8080 address-book-service
+```
 
 # JSON API Example
 {

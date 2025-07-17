@@ -1,7 +1,7 @@
 package com.reece.addressbookservice.domain.service;
 
-import com.reece.addressbookservice.application.service.AddressBookService;
-import com.reece.addressbookservice.application.service.ContactService;
+import com.reece.addressbookservice.application.AddressBookService;
+import com.reece.addressbookservice.application.ContactService;
 import com.reece.addressbookservice.domain.entity.AddressBook;
 import com.reece.addressbookservice.domain.entity.Contact;
 import com.reece.addressbookservice.application.mapper.AddressBookMapper;

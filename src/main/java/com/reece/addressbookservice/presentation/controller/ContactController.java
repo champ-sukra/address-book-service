@@ -6,7 +6,7 @@ import com.reece.addressbookservice.presentation.dto.ContactResponse;
 import com.reece.addressbookservice.presentation.dto.PhoneNoRequest;
 import com.reece.addressbookservice.domain.entity.Contact;
 import com.reece.addressbookservice.domain.entity.PhoneNo;
-import com.reece.addressbookservice.application.service.ContactService;
+import com.reece.addressbookservice.application.ContactService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
