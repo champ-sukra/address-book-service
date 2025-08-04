@@ -11,7 +11,7 @@ A RESTful Address Book API built with Java 21 and Spring Boot.
 - Support for multiple phone numbers per contact
 - Retrieve a unique set of contacts across multiple address books
 - H2 in-memory database for demo/testing (no installation required)
-- Clean architecture: controller, service, repository, DTO, and mapping layers
+- Clean architecture: presentation, in
 - Containerized with Docker for easy deployment
 - Comprehensive unit and integration tests
 - **Swagger/OpenAPI** documentation

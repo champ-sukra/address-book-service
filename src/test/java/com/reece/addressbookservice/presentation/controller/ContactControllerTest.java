@@ -1,13 +1,13 @@
 package com.reece.addressbookservice.presentation.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.reece.addressbookservice.application.mapper.ContactMapperImpl;
+import com.reece.addressbookservice.application.ContactMapperImpl;
 import com.reece.addressbookservice.presentation.dto.ContactResponse;
 import com.reece.addressbookservice.presentation.dto.PhoneNoRequest;
 import com.reece.addressbookservice.domain.entity.Contact;
 import com.reece.addressbookservice.domain.entity.PhoneNo;
 import com.reece.addressbookservice.presentation.exception.DataNotFoundException;
-import com.reece.addressbookservice.application.ContactService;
+import com.reece.addressbookservice.application.service.ContactService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

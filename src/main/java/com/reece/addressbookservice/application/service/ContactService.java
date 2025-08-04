@@ -1,4 +1,4 @@
-package com.reece.addressbookservice.application;
+package com.reece.addressbookservice.application.service;
 
 import com.reece.addressbookservice.presentation.dto.ContactRequest;
 import com.reece.addressbookservice.presentation.dto.PhoneNoRequest;

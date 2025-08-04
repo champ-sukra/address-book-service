@@ -9,7 +9,7 @@ import com.reece.addressbookservice.presentation.dto.ContactRequest;
 import com.reece.addressbookservice.presentation.dto.ContactResponse;
 import com.reece.addressbookservice.domain.entity.AddressBook;
 import com.reece.addressbookservice.domain.entity.Contact;
-import com.reece.addressbookservice.application.AddressBookService;
+import com.reece.addressbookservice.application.service.AddressBookService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;

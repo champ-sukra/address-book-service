@@ -1,7 +1,6 @@
 package com.reece.addressbookservice.application.mapper;
 
-import com.reece.addressbookservice.application.mapper.ContactMapper;
-import com.reece.addressbookservice.application.mapper.ContactMapperImpl;
+import com.reece.addressbookservice.application.ContactMapperImpl;
 import com.reece.addressbookservice.presentation.dto.ContactRequest;
 import com.reece.addressbookservice.presentation.dto.ContactResponse;
 import com.reece.addressbookservice.domain.entity.Contact;

@@ -1,7 +1,6 @@
 package com.reece.addressbookservice.application.mapper;
 
-import com.reece.addressbookservice.application.mapper.PhoneNoMapper;
-import com.reece.addressbookservice.application.mapper.PhoneNoMapperImpl;
+import com.reece.addressbookservice.application.PhoneNoMapperImpl;
 import com.reece.addressbookservice.presentation.dto.PhoneNoRequest;
 import com.reece.addressbookservice.domain.entity.PhoneNo;
 import org.junit.jupiter.api.Test;

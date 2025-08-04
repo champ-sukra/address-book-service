@@ -3,7 +3,6 @@ package com.reece.addressbookservice.domain.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.reece.addressbookservice.presentation.exception.InvalidInputException;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
 
 import java.util.Objects;
 

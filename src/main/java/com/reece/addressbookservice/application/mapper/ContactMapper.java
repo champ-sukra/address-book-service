@@ -1,11 +1,9 @@
 package com.reece.addressbookservice.application.mapper;
 
 import com.reece.addressbookservice.domain.entity.Contact;
-import com.reece.addressbookservice.domain.entity.PhoneNo;
 import com.reece.addressbookservice.presentation.dto.ContactRequest;
 import com.reece.addressbookservice.presentation.dto.ContactResponse;
 import org.mapstruct.Mapper;
-import org.springframework.stereotype.Component;
 
 @Mapper(componentModel = "spring")
 public interface  ContactMapper {
